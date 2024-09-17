@@ -9,7 +9,7 @@ def normalize_input(value, mean, min_val, max_val):
 
 # Load the data and perform initial preprocessing
 def load_data():
-    data = pd.read_csv(r"C:\Users\ACER\Downloads\banknotes.csv")
+    data = pd.read_csv(r"banknotes.csv")
     data.dropna(inplace=True)
     return data
 
