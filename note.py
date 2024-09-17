@@ -8,8 +8,9 @@ def normalize_input(value, mean, min_val, max_val):
     return (value - mean) / (max_val - min_val)
 
 # Load the data and perform initial preprocessing
+@st.cache
 def load_data():
-    data = pd.read_csv(r"banknotes.csv")
+    data = pd.read_csv("banknotes.csv")
     data.dropna(inplace=True)
     return data
 
@@ -39,11 +40,16 @@ def train_model(data):
 def main():
     st.title("Banknote Genuinity Prediction")
 
+    # Explanation of V1 and V2
+    st.subheader("What are V1 and V2?")
+    st.write("**V1 (Variance of Wavelet Transformed Image)**: This feature represents the variance (spread) of pixel intensities in the wavelet-transformed image of the banknote. Positive values indicate more variance.")
+    st.write("**V2 (Skewness of Wavelet Transformed Image)**: This feature represents the skewness (asymmetry) of pixel intensities in the wavelet-transformed image. Values can be either positive or negative.")
+
     st.write("Enter the values for V1 and V2 to predict if a banknote is fake or not.")
 
     # Input fields for user to enter V1 and V2 values
-    v1 = st.number_input("V1", value=0.0, format="%.2f")
-    v2 = st.number_input("V2", value=0.0, format="%.2f")
+    v1 = st.number_input("V1 (Variance) - Enter positive values only", min_value=0.0, format="%.2f")
+    v2 = st.number_input("V2 (Skewness) - Enter any value", format="%.2f")
 
     # Load data and train model
     data = load_data()
